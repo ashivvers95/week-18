@@ -3,13 +3,14 @@ const { Schema, model } = require('mongoose');
 const ThoughtSchema = new Schema({
   thoughtText: {
     type: String,
-    required: true
-    //Must be between 1 and 280 characters
+    required: true,
+    minLength: 1,
+    maxLength: 280
   },
   createdAt: {
     type: Date,
-    default: Date.now
-    // get: Use a getter method to format the timestamp on query
+    default: Date.now,
+    get: (createdAtVal) => getDate(createdAtVal)
   },
   username: {
     type: String,
@@ -17,9 +18,17 @@ const ThoughtSchema = new Schema({
   },
   reactions: [
       {
-        //Array of nested documents created with the reactionSchema
+        type: Schema.Types.ObjectId,
+        ref: 'Reaction'
       }
   ]
+},
+{
+    toJSON: {
+        virtuals: true,
+        getters: true
+    },
+    id:false
 });
 
 ThoughtSchema.virtual('reactionCount').get(function() {

@@ -10,19 +10,34 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true
-    //matching validation here?
+    unique: true,
+    validate: {
+      validator: function(v) {
+        return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
+      },
+      message: props => `${props.value} is not a valid phone number!`
+    },
+    required: [true, 'User phone number required']
   },
   thoughts: [
     {
+      type: Schema.Types.ObjectId,
       ref: 'Thought'
     }
   ],
   friends: [
     {
+      type: Schema.Types.ObjectId,
       ref: "User"
     }
   ]
+},
+{
+  toJSON: {
+    virtuals: true,
+  },
+  id: false
+
 });
 
 UserSchema.virtual('friendCount').get(function() {

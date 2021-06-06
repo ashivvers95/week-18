@@ -7,8 +7,8 @@ const ReactionSchema = new Schema({
   },
   reactionBody: {
     type: String,
-    required: true
-    //280 character maximum
+    required: true,
+    maxLength: 280
   },
   username: {
     type: String,
@@ -16,11 +16,18 @@ const ReactionSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now
-    //Use a getter method to format the timestamp on query
-    //get: (createdAtVal) => dateFormat(createdAtVal)
+    default: Date.now,
+    get: (createdAtVal) => getDate(createdAtVal)
   }
-});
+},
+{
+    toJSON: {
+        virtuals: true,
+        getters: true
+    },
+    id:false
+}
+);
 
 //This will not be a model, but rather will be used as 
 //the reaction field's sub-document schema in the Thought model.
