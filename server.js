@@ -10,7 +10,7 @@ app.use(express.static('public'));
 
 app.use(require('./routes'));
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/week18', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/week-18', {
   useFindAndModify: false,
   useNewUrlParser: true,
   useUnifiedTopology: true
