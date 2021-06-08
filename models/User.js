@@ -15,9 +15,9 @@ const UserSchema = new Schema({
       validator: function(v) {
         return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
       },
-      message: props => `${props.value} is not a valid phone number!`
+      message: props => `${props.value} is not a valid email!`
     },
-    required: [true, 'User phone number required']
+    required: [true, 'User phone email required']
   },
   thoughts: [
     {
